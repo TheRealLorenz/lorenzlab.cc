@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  {{ page.title }}
+
+</h1>
+<div class="subtitle">
+  <p><strong>{{ page.date }}</strong></p>
+
+  <button id="theme-toggle">
+    <i data-lucide="sun" class="icon sun"></i>
+    <i data-lucide="moon" class="icon moon"></i>
+  </button>
+</div>
+<hr />
+{{ page.content | safe }}
+{% endblock content %}
