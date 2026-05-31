@@ -1,13 +1,16 @@
-:root {
-  --bg: #fff;
-  --fg: #000;
-  --link: #0000ee;
-}
+@use 'sass:map';
 
-[data-theme="dark"] {
-  --bg: #1a1a1a;
-  --fg: #eaeaea;
-  --link: #5156ff;
+$themes: (
+  "light": (bg: #fff,    fg: #000,    link: #0000ee),
+  "dark":  (bg: #1a1a1a, fg: #eaeaea, link: #5156ff),
+);
+
+@each $theme, $vals in $themes {
+  [data-theme='#{$theme}'] {
+    --bg:   #{map.get($vals, bg)};
+    --fg:   #{map.get($vals, fg)};
+    --link: #{map.get($vals, link)};
+  }
 }
 
 html {
@@ -28,14 +31,10 @@ a {
 .subtitle {
   align-items: center;
   display: flex;
-}
 
-.subtitle > p {
-  display: inline;
-}
+  > p { display: inline; }
 
-.subtitle > #theme-toggle {
-  margin-left: auto;
+  > #theme-toggle { margin-left: auto; }
 }
 
 footer {
@@ -48,6 +47,16 @@ footer {
   border: 1px solid var(--fg);
   border-radius: 100%;
   padding: 8px;
+  transition: transform 150ms ease, background-color 150ms ease;
+
+  &:hover  {
+    cursor: pointer;
+    background-color: color-mix(in srgb, var(--fg) 10%, transparent);
+  }
+  &:active { transform: scale(0.9) rotate(30deg); }
+
+  .icon { transition: transform 300ms ease; }
+  &:hover .icon { transform: rotate(20deg); }
 }
 
 
@@ -57,18 +66,14 @@ footer {
   height: 16px;
 }
 
-[data-theme="light"] .icon.moon {
-    display: none;
-}
+$icon-visibility: (
+  "light": (show: sun,  hide: moon),
+  "dark":  (show: moon, hide: sun),
+);
 
-[data-theme="light"] .icon.sun {
-    display: block;
-}
-
-[data-theme="dark"] .icon.moon {
-    display: block;
-}
-
-[data-theme="dark"] .icon.sun {
-    display: none;
+@each $theme, $vals in $icon-visibility {
+  [data-theme="#{$theme}"] {
+    .icon.#{map.get($vals, show)} { display: block; }
+    .icon.#{map.get($vals, hide)} { display: none; }
+  }
 }
