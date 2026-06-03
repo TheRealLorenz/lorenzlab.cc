@@ -41,17 +41,19 @@ The stack is held together with connectors and lots of screws. Power gets cut wi
 
 **The system is too complex.**
 
-The stack needs a faster way to be fastened to the rocket, now the stack needs to be taken apart and put together again with screws. The internal connections are delicate.
+The _stack_ needs a faster way to be fastened to the rocket, now the only way to put screws through the _stack_ requires it to be **taken apart** and put together again. Also, the main **connectors** of the stack are quite **delicate**.
 
-Some peripherals were bound to the wrong bus (SPI/I2C/UART), based on the one that then appeared to be more convenient. Servomotors connections are *non-standard* and that's inconvenient, but even if they were standard, they could be plugged upside down.
+Some peripherals were bound to the **wrong bus** (SPI/I2C/UART), given that we have access to a lot of drivers code from the Zephyr RTOS. Servomotors connections are **non-standard** and that's inconvenient, but even standard connection do **not prevent backward connections**, they just don't blow up anything if it accidentally happens. It's important to prevent wrong connections, as assembling a rocket under pressure may easily lead to errors that may have been **prevented with a better design**.
 
-The battery connector is a hassle to connect and disconnect if it's not held tightly, as it was inconvenient to disconnect when the stack was mounted on its support. Using an Allen key as a power switch is really uncomfortable during development.
+The battery connector is a **hassle to connect and disconnect** if it's not held tightly, but it's just a matter of having a longer cable that can be gripped properly. Using an Allen key as a power switch is really **uncomfortable** during development.
 
-We probably don't need all of this copy of sensors (1 is plenty, 2 is almost too much), as the system already provides software redundancy with timers and the active control algorithm itself. We probably don't need all of the sensors in general.
+The **don't need all of these sensors**, but that's something that needs to be discussed. The _CATS Vega_ has a quite small subset of sensors and it's an industry standard. There are alreay plans to provide a software fallback using timer (as it's probably done in the _CATS Vega_).
 
-Is the arm switch wired? (Hope so). The power switch is not externally accessible. Servos cannot be easily connected to the CATS vega (we would need to fit 4). Do we need a breakwire?
+The power switch needs to be **accessible externally**, or at least there should be an external way to **easily turn off everything**.
 
-Cables need to have better connectors.
+The _CATS Vega_ is a COTS (Commercially Of The Shelf) product that needs to **interface** with the rocket in **parallel** with our _stack_, and acts like a failsafe that EuRoC requires. The thing is, as of now servos cannot be easily wired to the _CATS Vega_, as they use PWM and so **cannot** be wired in parallel. One obvious solution would be to double the number of servos (one set for our _stack_ and the other for the _CATS Vega_), but that's an issue in and of itself for the Recovery team!
+
+Cables have a huge **room for improvements**!
 
 ### What's next
 
@@ -77,17 +79,17 @@ The MCU board mantains a lower power state while in idle, and waits for an `ARM`
 
 ### What's Wrong
 
-The system is too complex.
+**The system is too complex.**
 
-There's no need for state management during pre flight, it's just useless and adds unnecessary complexity. Software arming (in addition to physical arming), is also unnecessary, the charger will be plugged in on the ramp, so electric consumption. It's also a weaker link of the chain, because a simple interfence may cause the rocket to simply not start the control algorithm!
+There's **no need for state** management **pre flight**, it's just useless and adds unnecessary complexity. **Software arming** (in addition to physical arming), is also **unnecessary**, the charger will be plugged in on the ramp, so electric consumption shouldn't be an issue. And what if the interferences **stops the arming** command from being received? The rocket control wouldn't start, and it would **crash** miserably.
 
-Code is not so well organized, we've rushed the last couple of weeks.
+Code is **not so well organized**, but we've rushed the last couple of weeks.
 
-It's hard for non avionics people to use the board, just for testing. There should be debug applications (like the one for servos), or even a debug section in the actual application which could be accessed by 3rd parties.
+It's **hard for non technical** people to use the board, just for testing. There should be a debug applications (like the one for the servos), or even a **debug/manual mode** in the actual application which could be accessed in some way.
 
-LEDs are almost ignored, as they're difficult to identify, some are burnt and whatnot. We're not using the ring lights, but they're plenty useful and NEED to be implemented for an actual launch.
+LEDs are almost ignored, as they're **difficult to identify**, some are burnt and some fry your eyes. We're **not using the ring lights**, but they're plenty useful and **NEED** to be implemented for an actual launch.
 
-There's no actual code for the scheduling, flight control and safety timers.
+There's **no actual code** for the scheduling, flight control and safety timers.
 
 ### What's next
 
