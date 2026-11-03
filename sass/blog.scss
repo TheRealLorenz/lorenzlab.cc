@@ -2,8 +2,8 @@
 @use './_base';
 
 $themes: (
-  "light": (bg: #fff,    fg: #000,    link: #0000ee, rule: #dcdcdc),
-  "dark":  (bg: #1a1a1a, fg: #eaeaea, link: #5156ff, rule: #3a3a3a),
+  "light": (bg: #fff,    fg: #000,    link: #0000ee, rule: #dcdcdc, muted: #6e6e6e),
+  "dark":  (bg: #1a1a1a, fg: #eaeaea, link: #5156ff, rule: #3a3a3a, muted: #9e9e9e),
 );
 
 @each $theme, $vals in $themes {
@@ -12,6 +12,7 @@ $themes: (
     --fg:     #{map.get($vals, fg)};
     --link:   #{map.get($vals, link)};
     --color-rule: #{map.get($vals, rule)};
+    --color-muted: #{map.get($vals, muted)};
   }
 }
 
@@ -56,6 +57,44 @@ footer {
   color: var(--fg);
   width: 16px;
   height: 16px;
+}
+
+.blog-nav {
+  font-size: 0.875em;
+  margin-block: 1em;
+
+  a {
+    text-decoration: underline;
+  }
+
+  &--bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+    padding-top: 1em;
+    border-top: 1px solid var(--color-rule, currentColor);
+  }
+}
+
+.blog-entry {
+  margin-block: 0.5em;
+
+  a {
+    text-decoration: underline;
+  }
+
+  span {
+    color: var(--color-muted);
+    font-size: 0.875em;
+    font-family: var(--font-mono, 'Roboto Mono', monospace);
+    white-space: nowrap;
+  }
+
+  .blog-entry-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
 }
 
 $icon-visibility: (

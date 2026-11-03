@@ -5,16 +5,23 @@
 
 <p>Hi, I'm Lorenzo Bellina, this is my tech oriented blog.</p>
 
-<h3>View my latest posts:</h2>
+<h3>View my latest posts:</h3>
 
 <p>
   <ul>
     {% set blog_section = get_section(path="blog/_index.md") %}
     {% for page in blog_section.pages[-3:] %}
-      <li><a href="{{ page.permalink }}">{{ page.title }}</a></li>
+    <li class="blog-entry">
+      <div class="blog-entry-row">
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+        <span>{{ page.date | date(format="%d %b %Y") }}</span>
+      </div>
+    </li>
     {% endfor %}
   </ul>
 </p>
+
+<p>Or you could also <a href="/blog/">view all posts</a>.</p>
 
 <h3>About me:</h3>
 

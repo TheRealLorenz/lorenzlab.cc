@@ -6,8 +6,12 @@ html {
   line-height: 1.5;
 }
 
+h1.title {
+  margin-top: 2em;
+}
+
 .container {
-  max-width: 80ch;
+  max-width: 70ch;
   margin-inline: auto;
 }
 
@@ -27,6 +31,17 @@ ul {
 
 li {
   margin-block: 0.5em;
+}
+
+.navbar {
+  font-size: 0.875em;
+  margin-block: 1em;
+  margin-inline: auto;
+
+  a {
+    text-decoration: underline;
+    margin-right: 1em;
+  }
 }
 
 p {
