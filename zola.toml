@@ -13,4 +13,5 @@ build_search_index = false
 theme = "catppuccin-mocha"
 
 [extra]
+author_name = "Lorenzo Bellina"
 # Put all your custom variables here
