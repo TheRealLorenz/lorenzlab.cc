@@ -1,35 +1,24 @@
 @use 'sass:map';
+@use './_base';
 
 $themes: (
-  "light": (bg: #fff,    fg: #000,    link: #0000ee),
-  "dark":  (bg: #1a1a1a, fg: #eaeaea, link: #5156ff),
+  "light": (bg: #fff,    fg: #000,    link: #0000ee, rule: #dcdcdc),
+  "dark":  (bg: #1a1a1a, fg: #eaeaea, link: #5156ff, rule: #3a3a3a),
 );
 
 @each $theme, $vals in $themes {
   [data-theme='#{$theme}'] {
-    --bg:   #{map.get($vals, bg)};
-    --fg:   #{map.get($vals, fg)};
-    --link: #{map.get($vals, link)};
+    --bg:     #{map.get($vals, bg)};
+    --fg:     #{map.get($vals, fg)};
+    --link:   #{map.get($vals, link)};
+    --color-rule: #{map.get($vals, rule)};
   }
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
 }
 
 html {
   background-color: var(--bg);
   color: var(--fg);
   font-family: 'Roboto Mono', sans-serif;
-}
-
-a {
-  color: var(--link);
-}
-
-.container {
-  max-width: 80ch;
-  margin-inline: auto;
 }
 
 .subtitle {
@@ -62,7 +51,6 @@ footer {
   .icon { transition: transform 300ms ease; }
   &:hover .icon { transform: rotate(20deg); }
 }
-
 
 .icon {
   color: var(--fg);
