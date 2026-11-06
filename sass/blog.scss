@@ -23,12 +23,21 @@ html {
 }
 
 .subtitle {
-  align-items: center;
-  display: flex;
+  > .bar {
+    align-items: center;
+    display: flex;
 
-  > p { display: inline; }
+    > p {
+      color: var(--color-muted);
+      display: inline;
+    }
 
-  > #theme-toggle { margin-left: auto; }
+    > #theme-toggle { margin-left: auto; }
+  }
+
+  > hr {
+    margin-top: 0;
+  }
 }
 
 footer {
